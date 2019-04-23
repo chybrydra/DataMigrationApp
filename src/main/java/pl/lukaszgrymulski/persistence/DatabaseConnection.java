@@ -1,30 +1,29 @@
 package pl.lukaszgrymulski.persistence;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DatabaseConnection {
-
 
     private static Connection connection = null;
 
     private DatabaseConnection() { }
 
-    public static Connection getConnection() {
-
-        if (connection == null) {
-            String ipOfDatabase = "192.168.99.102";
-            String portOfDatabase = "9001";
-            String databaseName = "britenetrekr";
-            String url = String.format(
-                    "jdbc:mysql://%s:%s/%s?characterEncoding=UTF-8",
-                    ipOfDatabase,
-                    portOfDatabase,
-                    databaseName
-            );
-            String user = "root";
-            String password = "root";
+    private static void createConnection() {
+        String path = "src/main/resources/dbconfig.properties";
+        File configFile = new File(path);
+        try (InputStream input = new FileInputStream(configFile)) {
+            Properties props = new Properties();
+            props.load(input);
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.user");
+            String password = props.getProperty("db.password");
             try {
                 connection = DriverManager.getConnection(url, user, password);
             } catch (SQLException e) {
@@ -32,6 +31,14 @@ public class DatabaseConnection {
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("VendorError: " + e.getErrorCode());
             }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() {
+        if (connection == null) {
+            createConnection();
         }
         return connection;
     }
