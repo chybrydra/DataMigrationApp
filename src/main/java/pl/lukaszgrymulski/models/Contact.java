@@ -3,41 +3,48 @@ package pl.lukaszgrymulski.models;
 public class Contact {
 
     Integer id;
-    Integer customerId;
+    Integer clientId;
     Integer contactTypeId;
     String contact;
 
     public Contact() {
     }
 
-    public Contact(Integer id, Integer customerId, ContactType contactType, String contact) {
+    public Contact(Integer id, Integer clientId, Integer contactTypeId, String contact) {
         this.id = id;
-        this.customerId = customerId;
+        this.clientId = clientId;
+        this.contactTypeId = contactTypeId;
+        this.contact = contact;
+    }
+
+    public Contact(Integer id, Integer clientId, ContactType contactType, String contact) {
+        this.id = id;
+        this.clientId = clientId;
         this.contactTypeId = contactType.getTypeId();
         this.contact = contact;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Integer getClientId() {
+        return clientId;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
 
-    public int getContactTypeId() {
+    public Integer getContactTypeId() {
         return contactTypeId;
     }
 
-    public void setContactTypeId(int contactTypeId) {
+    public void setContactTypeId(Integer contactTypeId) {
         this.contactTypeId = contactTypeId;
     }
 
@@ -57,7 +64,7 @@ public class Contact {
     public String toString() {
         return "Contact{" +
                 "id=" + id +
-                ", customerId=" + customerId +
+                ", clientId=" + clientId +
                 ", contactType=" + contactTypeId +
                 ", contact='" + contact + '\'' +
                 '}';

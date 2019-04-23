@@ -33,7 +33,16 @@ public class DatabaseConnection {
                 System.out.println("VendorError: " + e.getErrorCode());
             }
         }
-
         return connection;
+    }
+
+    public static void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("could not close connection");
+            System.out.println("SQL state: " + e.getSQLState());
+            e.printStackTrace();
+        }
     }
 }

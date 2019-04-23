@@ -7,16 +7,20 @@ import java.sql.*;
 
 public class ClientDao {
 
-    public int saveClientInDatabase(Client client) {
-        Connection connection = DatabaseConnection.getConnection();
-        Integer justMigratedClientId = null;
+    Connection connection = DatabaseConnection.getConnection();
 
+    public int saveClientInDatabase(Client client) {
+        Integer justMigratedClientId = null;
         try {
             String query = "INSERT INTO CLIENTS(ID, NAME, SURNAME, AGE) VALUES (null, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, client.getName());
             statement.setString(2, client.getSurname());
-            statement.setInt(3, client.getAge());
+            if (client.getAge() != null) {
+                statement.setInt(3, client.getAge());
+            } else {
+                statement.setNull(3, Types.INTEGER);
+            }
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
@@ -31,11 +35,21 @@ public class ClientDao {
                 throw new SQLException("Creating client ("+client+") failed, no ID obtained.");
             }
 
+            System.out.printf("Successfully migrated: [%d. %s %s (%d yr old)]\n",
+                    justMigratedClientId,
+                    client.getName(),
+                    client.getSurname(),
+                    client.getAge()
+            );
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.printf("Could not migrate client: [%s %s (%d yr old)]\n",
+                    client.getName(),
+                    client.getSurname(),
+                    client.getAge()
+            );
         }
 
-        System.out.println("Gitara!");
         return justMigratedClientId;
     }
 
