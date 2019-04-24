@@ -1,5 +1,6 @@
-package pl.lukaszgrymulski.migration;
+package pl.lukaszgrymulski.migration.csv;
 
+import pl.lukaszgrymulski.migration.ContactTypeDeterminer;
 import pl.lukaszgrymulski.models.Client;
 import pl.lukaszgrymulski.models.Contact;
 
@@ -32,7 +33,7 @@ public class CsvDataExtractor {
             contacts.add(new Contact(
                null,
                null,
-               ContactTypeDeterminer.determineContactTypeId(contactValue),
+               ContactTypeDeterminer.determineContactTypeIdByValue(contactValue),
                 contactValue
             ));
         }
