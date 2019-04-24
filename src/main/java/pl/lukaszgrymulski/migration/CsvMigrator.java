@@ -18,7 +18,7 @@ public class CsvMigrator {
         migrationUnitDao = new MigrationUnitDao();
     }
 
-    public void migrateToDatabase(File file) {
+    public void migrateFileToDatabase(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = null;
             while ((line = reader.readLine()) != null) {

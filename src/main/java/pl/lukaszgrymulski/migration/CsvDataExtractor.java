@@ -18,7 +18,6 @@ public class CsvDataExtractor {
                 client.setAge(age);
             }
         }
-
         return client;
     }
 
