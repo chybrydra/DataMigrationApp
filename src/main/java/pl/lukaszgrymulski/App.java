@@ -1,17 +1,15 @@
 package pl.lukaszgrymulski;
 
+import pl.lukaszgrymulski.migration.CsvMigrator;
 
-import pl.lukaszgrymulski.dao.ClientDao;
-import pl.lukaszgrymulski.models.Client;
+import java.io.File;
 
 public class App {
 
     public static void main(String[] args) {
-        System.out.println("hola amigo");
-        Client client = new Client(null, "Tony", "Montana", null);
-        ClientDao clientDao = new ClientDao();
-
-        clientDao.saveClientInDatabase(client);
+        CsvMigrator migrator = new CsvMigrator();
+        File file = new File("C:\\Users\\ŁUKASZ\\Desktop\\dane-osoby.txt");
+        migrator.migrateFileToDatabase(file);
     }
 
 }
