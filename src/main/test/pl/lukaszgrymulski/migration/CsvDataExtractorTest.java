@@ -1,6 +1,7 @@
 package pl.lukaszgrymulski.migration;
 
 import org.junit.jupiter.api.Test;
+import pl.lukaszgrymulski.migration.csv.CsvDataExtractor;
 import pl.lukaszgrymulski.models.Client;
 import pl.lukaszgrymulski.models.Contact;
 import pl.lukaszgrymulski.models.ContactType;

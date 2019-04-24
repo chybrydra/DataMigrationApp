@@ -1,6 +1,7 @@
-package pl.lukaszgrymulski.migration;
+package pl.lukaszgrymulski.migration.csv;
 
 import pl.lukaszgrymulski.dao.MigrationUnitDao;
+import pl.lukaszgrymulski.migration.csv.CsvDataExtractor;
 import pl.lukaszgrymulski.models.Client;
 import pl.lukaszgrymulski.models.Contact;
 import pl.lukaszgrymulski.models.MigrationUnit;
