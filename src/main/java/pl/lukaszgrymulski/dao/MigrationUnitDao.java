@@ -8,10 +8,19 @@ public class MigrationUnitDao {
     ContactDao contactDao = new ContactDao();
 
     public void saveMigrationUnit(MigrationUnit migrationUnit) {
-        int clientGeneratedId = clientDao.saveClientInDatabase(migrationUnit.getClient());
+        Integer clientGeneratedId = null;
+        clientGeneratedId = clientDao.findUserInDatabase(migrationUnit.getClient());
+
+        if (clientGeneratedId == null) {
+            clientGeneratedId = clientDao.saveClientInDatabase(migrationUnit.getClient());
+        }
+
+        Integer finalClientGeneratedId = clientGeneratedId;
         migrationUnit.getContactList().stream().forEach(c -> {
-            c.setClientId(clientGeneratedId);
-            contactDao.saveContactToDB(c);
+            c.setClientId(finalClientGeneratedId);
+            if (!contactDao.contactExistsInDB(c)) {
+                contactDao.saveContactToDB(c);
+            }
         });
     }
 

@@ -5,6 +5,7 @@ import pl.lukaszgrymulski.persistence.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ContactDao {
@@ -33,7 +34,23 @@ public class ContactDao {
                     contact.getContact()
             );
         }
-
     }
 
+    public boolean contactExistsInDB(Contact contact) {
+        try {
+            String query = "SELECT ID FROM CONTACTS WHERE ID_CUSTOMER=? AND TYPE=? AND CONTACT=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, contact.getClientId());
+            statement.setInt(2, contact.getContactTypeId());
+            statement.setString(3, contact.getContact());
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -9,6 +9,36 @@ public class ClientDao {
 
     Connection connection = DatabaseConnection.getConnection();
 
+    public Integer findUserInDatabase(Client client) {
+        Integer clientId = null;
+        try {
+            String query = null;
+            PreparedStatement statement = null;
+
+            if (client.getAge() != null) {
+                query = "SELECT ID FROM CLIENTS WHERE NAME=? AND SURNAME=? AND AGE=?";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, client.getName());
+                statement.setString(2, client.getSurname());
+                statement.setInt(3, client.getAge());
+            } else {
+                query = "SELECT ID FROM CLIENTS WHERE NAME=? AND SURNAME=? AND AGE IS NULL";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, client.getName());
+                statement.setString(2, client.getSurname());
+            }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                clientId = resultSet.getInt("ID");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientId;
+    }
+
     public int saveClientInDatabase(Client client) {
         Integer justMigratedClientId = null;
         try {
