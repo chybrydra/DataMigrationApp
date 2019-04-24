@@ -2,8 +2,8 @@ package pl.lukaszgrymulski.migration;
 
 import pl.lukaszgrymulski.models.Client;
 import pl.lukaszgrymulski.models.Contact;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CsvDataExtractor {
@@ -23,8 +23,26 @@ public class CsvDataExtractor {
     }
 
     public static List<Contact> extractContactList(String[] lineAsArray) {
-        throw new NotImplementedException();
+        if (lineAsArray.length<5) return new ArrayList<>();
+        List<String> contactValues = new ArrayList<>();
+        for (int i=4; i<lineAsArray.length; i++) {
+            contactValues.add(lineAsArray[i]);
+        }
+
+        List<Contact> contacts = new ArrayList<>();
+
+        for(String contactValue : contactValues) {
+            contacts.add(new Contact(
+               null,
+               null,
+               ContactTypeDeterminer.determineContactTypeId(contactValue),
+                contactValue
+            ));
+        }
+
+        return contacts;
     }
+
 
 
 

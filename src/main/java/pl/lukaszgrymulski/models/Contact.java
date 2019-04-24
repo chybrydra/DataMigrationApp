@@ -1,5 +1,7 @@
 package pl.lukaszgrymulski.models;
 
+import java.util.Objects;
+
 public class Contact {
 
     Integer id;
@@ -68,5 +70,21 @@ public class Contact {
                 ", contactType=" + contactTypeId +
                 ", contact='" + contact + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact1 = (Contact) o;
+        return Objects.equals(id, contact1.id) &&
+                Objects.equals(clientId, contact1.clientId) &&
+                Objects.equals(contactTypeId, contact1.contactTypeId) &&
+                Objects.equals(contact, contact1.contact);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, clientId, contactTypeId, contact);
     }
 }
