@@ -13,7 +13,6 @@ public class App {
 
         UserView userView = new UserView();
         userView.startUserInferface();
-
     }
 
 }
