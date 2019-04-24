@@ -7,6 +7,7 @@ import pl.lukaszgrymulski.models.MigrationUnit;
 import pl.lukaszgrymulski.validators.CsvValidator;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class CsvMigrator {
@@ -19,19 +20,16 @@ public class CsvMigrator {
 
     public void migrateToDatabase(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line = "";
-            String[] lineAsArray = null;
-            int lineNumber= 1 ;
+            String line = null;
             while ((line = reader.readLine()) != null) {
-                lineAsArray = line.split(",");
-                if (CsvValidator.validateCsvLine(line)) {
-                    executeCsvLineMigration(lineAsArray);
+                List<String> lineAsList = Arrays.asList(line.replace(" ", "").split(","));
+                if (CsvValidator.validateCsvLine(lineAsList)) {
+                    executeCsvLineMigration(lineAsList);
                 } else {
-                    throw new IllegalArgumentException(
-                            String.format("Could not migrate csv line %d (%s) as its data is invalid.", lineNumber, line)
+                    System.err.println(
+                            String.format("Could not migrate csv line (%s) as its data is invalid.", line)
                     );
                 }
-                lineNumber++;
             }
         } catch (FileNotFoundException e) {
             System.out.println("File was not found: " + file.getAbsolutePath());
@@ -40,10 +38,10 @@ public class CsvMigrator {
         }
     }
 
-    private void executeCsvLineMigration(String[] lineAsArray) {
+    private void executeCsvLineMigration(List<String> lineAsList) {
         MigrationUnit migrationUnit = new MigrationUnit();
-        Client client = CsvDataExtractor.extractClientObject(lineAsArray);
-        List<Contact> contactList = CsvDataExtractor.extractContactList(lineAsArray);
+        Client client = CsvDataExtractor.extractClientObject(lineAsList);
+        List<Contact> contactList = CsvDataExtractor.extractContactList(lineAsList);
 
         migrationUnit.setClient(client);
         migrationUnit.setContactList(contactList);

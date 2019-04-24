@@ -1,57 +1,71 @@
 package pl.lukaszgrymulski.validators;
 
-import com.sun.media.sound.InvalidDataException;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CsvValidatorTest {
 
     @Test
-    void validateCsvLineShouldReturnTrueWithContacts() throws InvalidDataException {
+    void validateCsvLineShouldReturnTrueWithContacts() {
         String line = "Kondor,Nowak,12,Lublin, 123334231, mail@mail.com, jbr";
-        assertTrue(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertTrue(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
-    void validateCsvLineShouldReturnTrueWithoutAnyContact() throws InvalidDataException {
+    void validateCsvLineShouldReturnTrueWithoutAnyContact() {
         String line = "Kondor,Nowak,12,Lublin";
-        assertTrue(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertTrue(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
     void validateCsvLineShouldReturnTrueWithEmptyAge() {
         String line = "Kondor,Nowak,,Lublin";
-        assertTrue(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertTrue(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
     void validateCsvLineShouldReturnFalseIfNameContainsDigits() {
         String line = "Kondor1,Nowak,12,Lublin,66666666,kondor@gmail.com,12333,jbr";
-        assertFalse(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertFalse(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
     void validateCsvLineShouldReturnFalseIfSurnameContainsDigits() {
         String line = "Kondor,Now2ak,12,Lublin,66666666,kondor@gmail.com,12333,jbr";
-        assertFalse(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertFalse(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
     void validateCsvLineShouldReturnFalseIfAgeIsNeitherEmptyNorNumeric() {
         String line = "Kondor,Nowak,12a,Lublin,66666666,kondor@gmail.com,12333,jbr";
-        assertFalse(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertFalse(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
     void validateCsvLineShouldReturnTrueWithMinimumData() {
         String line = "Kondor,Nowak";
-        assertTrue(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertTrue(CsvValidator.validateCsvLine(lineAsList));
     }
 
     @Test
     void validateCsvLineShouldReturnFalseIfNotEnoughData() {
         String line = "Kondor";
-        assertFalse(CsvValidator.validateCsvLine(line));
+        List<String> lineAsList = transformCsvLineToList(line);
+        assertFalse(CsvValidator.validateCsvLine(lineAsList));
+    }
+
+    private List<String> transformCsvLineToList(String line) {
+        return Arrays.asList(line.split(","));
     }
 }

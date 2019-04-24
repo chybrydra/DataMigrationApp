@@ -20,9 +20,9 @@ class CsvDataExtractorTest {
         String city = "Ohio";
         String contact1 = "123123123";
         String contact2 = "a@a.com";
-        String[] csvLineAsArray = {name, surname, age, city, contact1, contact2};
+        List<String> csvLineAsList = Arrays.asList(name, surname, age, city, contact1, contact2);
         Client client = new Client(null, name, surname, Integer.valueOf(age));
-        assertEquals(client, CsvDataExtractor.extractClientObject(csvLineAsArray));
+        assertEquals(client, CsvDataExtractor.extractClientObject(csvLineAsList));
     }
 
     @Test
@@ -30,18 +30,18 @@ class CsvDataExtractorTest {
         String name = "John";
         String surname = "Doe";
         String age = "";
-        String[] csvLineAsArray = {name, surname, age};
+        List<String> csvLineAsList = Arrays.asList(name, surname, age);
         Client client = new Client(null, name, surname, null);
-        assertEquals(client, CsvDataExtractor.extractClientObject(csvLineAsArray));
+        assertEquals(client, CsvDataExtractor.extractClientObject(csvLineAsList));
     }
 
     @Test
     void extractClientObjectShouldReturnExpectedObjectIfMinimumDataInArray() {
         String name = "John";
         String surname = "Doe";
-        String[] csvLineAsArray = {name, surname};
+        List<String> csvLineAsList = Arrays.asList(name, surname);
         Client client = new Client(null, name, surname, null);
-        assertEquals(client, CsvDataExtractor.extractClientObject(csvLineAsArray));
+        assertEquals(client, CsvDataExtractor.extractClientObject(csvLineAsList));
     }
 
     @Test
@@ -56,8 +56,8 @@ class CsvDataExtractorTest {
         Contact contact4 = new Contact(null, null, ContactType.UNKNOWN, unknown);
 
         List<Contact> contacts = Arrays.asList(contact1, contact2, contact3, contact4);
-        String[] contactsArray = {"name", "surname", "age", "city", email, phone, jabber, unknown};
+        List<String> contactsList = Arrays.asList("name", "surname", "age", "city", email, phone, jabber, unknown);
 
-        assertEquals(contacts, CsvDataExtractor.extractContactList(contactsArray));
+        assertEquals(contacts, CsvDataExtractor.extractContactList(contactsList));
     }
 }

@@ -8,13 +8,13 @@ import java.util.List;
 
 public class CsvDataExtractor {
 
-    public static Client extractClientObject(String[] lineAsArray) {
+    public static Client extractClientObject(List<String> lineAsList) {
         Client client = new Client();
-        client.setName(lineAsArray[0]);
-        client.setSurname(lineAsArray[1]);
-        if (lineAsArray.length>2) {
-            if (!lineAsArray[2].equals("")) {
-                int age = Integer.valueOf(lineAsArray[2]);
+        client.setName(lineAsList.get(0));
+        client.setSurname(lineAsList.get(1));
+        if (lineAsList.size()>2) {
+            if (!lineAsList.get(2).equals("")) {
+                int age = Integer.valueOf(lineAsList.get(2));
                 client.setAge(age);
             }
         }
@@ -22,15 +22,13 @@ public class CsvDataExtractor {
         return client;
     }
 
-    public static List<Contact> extractContactList(String[] lineAsArray) {
-        if (lineAsArray.length<5) return new ArrayList<>();
+    public static List<Contact> extractContactList(List<String> lineAsList) {
+        if (lineAsList.size()<5) return new ArrayList<>();
         List<String> contactValues = new ArrayList<>();
-        for (int i=4; i<lineAsArray.length; i++) {
-            contactValues.add(lineAsArray[i]);
+        for (int i=4; i<lineAsList.size(); i++) {
+            contactValues.add(lineAsList.get(i));
         }
-
         List<Contact> contacts = new ArrayList<>();
-
         for(String contactValue : contactValues) {
             contacts.add(new Contact(
                null,
