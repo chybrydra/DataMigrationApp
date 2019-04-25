@@ -2,7 +2,7 @@
 
 ---
 
-####About
+#### About
 This application loads csv/xml file with customer and customer-contacts data.
 If the data is valid and if it doesn't yet exist in database, it is persisted to db.
 In resources folder there are sample files with sample data that may be. 
@@ -25,7 +25,7 @@ Database should have following tables:
     - ID_CUSTOMER (INTEGER)
     - TYPE (INTEGER)
     - CONTACT (VARCHAR)
-Column types are obligatory, however column and table names may be changed in dbconfig.properties file
+Column types are obligatory, however **column and table names may be changed in dbconfig.properties file**
 
 #### User Interface
 The application, after it's start, provides user with a simple console interface.
