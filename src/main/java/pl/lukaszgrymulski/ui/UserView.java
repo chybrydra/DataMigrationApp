@@ -10,16 +10,14 @@ public class UserView {
     public static File currentFile = new File("/");
     public static Scanner scanner = new Scanner(System.in);
 
-
     public void startUserInferface() {
         printCommand("==== MIGRATION", "TOOL ====");
         printHelp();
         printCurrentLocation();
 
         while (true) {
-            System.out.print(currentFile.getAbsolutePath() + " > ");
+            System.out.print(currentFile.getAbsolutePath() + ">$");
             String userDecision = scanner.nextLine();
-            System.out.println(currentFile.getAbsolutePath() + " > " + userDecision);
             processUserDecision(userDecision);
         }
     }

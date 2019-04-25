@@ -23,7 +23,7 @@ class ContactTypeDeterminerTest {
 
     @Test
     void determineContactTypeIdShouldReturnJabberId() {
-        String contact = "jbr";
+        String contact = "john@doe.pl/resource";
         int id = ContactTypeDeterminer.determineContactTypeIdByValue(contact);
         assertTrue(id == ContactType.JABBER.getTypeId());
     }

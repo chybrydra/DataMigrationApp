@@ -17,7 +17,7 @@ public class ClientSchema {
     static String ageColName = null;
 
     private static void loadData() {
-        String path = DBConfigurationFile.DB_CONFIG_FILE_PATH;
+        String path = DBConfigurationFile.getDbConfigFilePath();
         File configFile = new File(path);
         try (InputStream input = new FileInputStream(configFile)) {
             Properties props = new Properties();
