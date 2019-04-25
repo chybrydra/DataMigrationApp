@@ -12,7 +12,7 @@ public class UserView {
 
 
     public void startUserInferface() {
-        System.out.println("==== MIGRATION TOOL =====");
+        printCommand("==== MIGRATION", "TOOL ====");
         printHelp();
         printCurrentLocation();
 
