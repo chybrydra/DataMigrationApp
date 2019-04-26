@@ -137,7 +137,7 @@ public class UserView {
         printCommand("mt next=[filename]","next directory");
         printCommand("mt dir=[absolutePath]","go to absolute directory");
         printCommand("mt list","list available files/directories");
-        printCommand("mt migrate","migrate chosen file");
+        printCommand("mt migrate","migrate current file");
         printCommand("mt migrate -f [absolutePath]","migrate chosen file");
         printCommand("mt exit","exit app");
     }

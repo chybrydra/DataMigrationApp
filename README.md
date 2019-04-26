@@ -1,17 +1,17 @@
 ### Data migration tool
 
 ---
-
-[about](#about) |
+**Index**  
+[about](#about) | 
 [db configuration](#dbconf) |
 [launch app](#launch) |
 [sample files](#samples) | 
 [database structure](#schema) |
-[user interface](#ui)  |
+[user interface](#ui) 
 
 ---
 
-#### <a name="about"></a> About
+#### <a name="about"></a> About<small>
 This application, written in Java 8, loads csv/xml file with customer and customer-contacts data.
 If the data is valid and if it doesn't yet exist in database, it is persisted to db.
 In resources folder there are sample files with sample data that may be.  
