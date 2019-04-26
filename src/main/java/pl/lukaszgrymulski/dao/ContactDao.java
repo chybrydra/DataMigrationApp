@@ -1,5 +1,6 @@
 package pl.lukaszgrymulski.dao;
 
+import pl.lukaszgrymulski.dao.schema.ContactSchema;
 import pl.lukaszgrymulski.models.Contact;
 import pl.lukaszgrymulski.persistence.DatabaseConnection;
 
@@ -10,12 +11,22 @@ import java.sql.SQLException;
 
 public class ContactDao {
 
+    static String tableName = ContactSchema.getTableName();
+    static String idColName = ContactSchema.getIdColName();
+    static String customerIdColName = ContactSchema.getCustomerIdColName();
+    static String typeColName = ContactSchema.getTypeColName();
+    static String contactColName = ContactSchema.getContactColName();
+
+
     Connection connection = DatabaseConnection.getConnection();
 
     public void saveContactToDB(Contact contact) {
-        String sql = "INSERT INTO CONTACTS(ID, ID_CUSTOMER, TYPE, CONTACT) VALUES(null,?,?,?)";
+        String query = String.format(
+            "INSERT INTO %s(%s,%s,%s,%s) VALUES(null,?,?,?)",
+            tableName, idColName, customerIdColName, typeColName, contactColName
+        );
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, contact.getClientId());
             statement.setInt(2, contact.getContactTypeId());
             statement.setString(3, contact.getContact());
@@ -38,7 +49,10 @@ public class ContactDao {
 
     public boolean contactExistsInDB(Contact contact) {
         try {
-            String query = "SELECT ID FROM CONTACTS WHERE ID_CUSTOMER=? AND TYPE=? AND CONTACT=?";
+            String query = String.format(
+                    "SELECT %s FROM %s WHERE %s=? AND %s=? AND %s=?",
+                    idColName, tableName, customerIdColName, typeColName, contactColName
+            );
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, contact.getClientId());
             statement.setInt(2, contact.getContactTypeId());

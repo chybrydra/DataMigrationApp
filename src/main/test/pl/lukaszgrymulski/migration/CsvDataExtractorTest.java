@@ -51,7 +51,7 @@ class CsvDataExtractorTest {
         Contact contact1 = new Contact(null, null, ContactType.EMAIL, email);
         String phone = "123456789";
         Contact contact2 = new Contact(null, null, ContactType.PHONE, phone);
-        String jabber = "jbr";
+        String jabber = "test@test.com/resource";
         Contact contact3 = new Contact(null, null, ContactType.JABBER, jabber);
         String unknown = "john.doe";
         Contact contact4 = new Contact(null, null, ContactType.UNKNOWN, unknown);

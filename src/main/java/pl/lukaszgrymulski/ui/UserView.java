@@ -10,16 +10,14 @@ public class UserView {
     public static File currentFile = new File("/");
     public static Scanner scanner = new Scanner(System.in);
 
-
     public void startUserInferface() {
-        System.out.println("==== MIGRATION TOOL =====");
+        printCommand("==== MIGRATION", "TOOL ====");
         printHelp();
         printCurrentLocation();
 
         while (true) {
-            System.out.print(currentFile.getAbsolutePath() + " > ");
+            System.out.print(currentFile.getAbsolutePath() + ">$");
             String userDecision = scanner.nextLine();
-            System.out.println(currentFile.getAbsolutePath() + " > " + userDecision);
             processUserDecision(userDecision);
         }
     }
@@ -139,7 +137,7 @@ public class UserView {
         printCommand("mt next=[filename]","next directory");
         printCommand("mt dir=[absolutePath]","go to absolute directory");
         printCommand("mt list","list available files/directories");
-        printCommand("mt migrate","migrate chosen file");
+        printCommand("mt migrate","migrate current file");
         printCommand("mt migrate -f [absolutePath]","migrate chosen file");
         printCommand("mt exit","exit app");
     }

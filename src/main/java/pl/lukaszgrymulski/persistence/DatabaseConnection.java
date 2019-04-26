@@ -16,7 +16,7 @@ public class DatabaseConnection {
     private DatabaseConnection() { }
 
     private static void createConnection() {
-        String path = "src/main/resources/dbconfig.properties";
+        String path = DBConfigurationFile.getDbConfigFilePath();
         File configFile = new File(path);
         try (InputStream input = new FileInputStream(configFile)) {
             Properties props = new Properties();

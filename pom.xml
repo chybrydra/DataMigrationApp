@@ -7,6 +7,8 @@
     <groupId>pl.lukaszgrymulski</groupId>
     <artifactId>data-migration-app</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <description>Application to migrate data from csv/xml files to database. There are sample-data files in src/main/resources directory to illustrate what kind of data can be migrated.</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -19,6 +21,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.15</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -35,7 +38,9 @@
     </dependencies>
 
     <build>
+        <finalName>MigrationApp</finalName>
         <plugins>
+            <!-- TO FIRE JUPITER TESTS IN MAVEN LIFECYCLE -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -46,7 +51,59 @@
                     </includes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <mainClass>pl.lukaszgrymulski.App</mainClass>
+                </configuration>
+            </plugin>
+            <!-- TO GATHER FILES INTO ONE JAR  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>pl.lukaszgrymulski.App</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>MigrationApp2</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        <resources>
+            <!--TO MOVE SCRIPTS TO "TARGET" IN BUILD PROCESS -->
+            <resource>
+                <filtering>true</filtering>
+                <directory>${project.basedir}/src/main/resources</directory><!-- from -->
+                <targetPath>${project.build.directory}</targetPath><!-- to -->
+                <includes>
+                    <include>run.bat</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${project.basedir}/src/main/resources</directory><!-- from -->
+                <targetPath>${project.build.outputDirectory}/config</targetPath><!-- to -->
+                <includes>
+                    <include>dbconfig.properties</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>
